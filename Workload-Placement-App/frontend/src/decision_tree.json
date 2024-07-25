@@ -1,0 +1,441 @@
+{
+    "VSAD Select": {
+        "Determine Workload Placement": {
+            "next": "Portfolio Question"
+        }
+    },
+    "Portfolio Question": {
+        "All options": {
+            "next": "Workload Description"
+        },
+        "answer_array": [
+            "AI & D",
+            "CISO",
+            "CSG (Corporate)",
+            "GTS Security",
+            "Network Systems",
+            "Non IT",
+            "TSGI",
+            "VBG (Business)",
+            "VCG (Consumer)"
+        ],
+        "text_option": false,
+        "multi-select": false,
+        "question": "What portfolio does this application fall under?"
+    },
+    "Workload Description": {
+        "The workload is new": {
+            "next": "Data Regulation Check"
+        },
+        "The workload is an existing one": {
+            "next": "Existing App"
+        },
+        "The workload is a new component of an existing app": {
+            "next": "Existing App"
+        },
+        "answer_array": [
+            "The workload is new",
+            "The workload is an existing one",
+            "The workload is a new component of an existing app"
+        ],
+        "text_option": false,
+        "multi-select": false,
+        "question": "Which of the following best describes your workload?"
+    },
+    "Existing App": {
+        "All options": {
+            "next": "App Retirement"
+        },
+        "answer_array": [
+            "AWS",
+            "Azure",
+            "GCP",
+            "OCI",
+            "Private Cloud - Tampa",
+            "Private Cloud - Twinsburg",
+            "Private Cloud - Sacramento",
+            "Private Cloud - Freehold"
+        ],
+        "text_option": false,
+        "multi-select": true,
+        "question": "If existing, where is the current hardware/processing located?"
+    },
+    "App Retirement": {
+        "Yes": {
+            "next": "Review Responses"
+        },
+        "No": {
+            "next": "Circumstances"
+        },
+        "answer_array": [
+            "Yes",
+            "No"
+        ],
+        "text_option": false,
+        "multi-select": false,
+        "question": "Are there plans to retire the application in the next 12 months?"
+    },
+    "Circumstances": {
+        "All options": {
+            "next": "Impact on App"
+        },
+        "answer_array": [
+            "New app/split functionality or channels from existing app to new VSAD",
+            "New service/functionality, not already represented in the application",
+            "Hardware Tech Refresh (unsupported hardware/OS)",
+            "Software Refresh/License changes",
+            "Platform Change (Solaris <-> Linux, instance to containers, convert to serverless)",
+            "Cost evaluation, including CapEX <-> OpEx changes",
+            "Staffing changes/reorganization",
+            "External factors (anti-pattern for existing provieer, data center limits, non-directional data center"
+        ],
+        "text_option": false,
+        "multi-select": true,
+        "question": "What circumstances are driving a workload placement evaluation?"
+    },
+    "Impact on App": {
+        "All options": {
+            "next": "Data Regulation Check"
+        },
+        "answer_array": [],
+        "text_option": true,
+        "multi-select": false,
+        "question": "Explain the impacted components and overall impact to the application anticipated by this change. If this is a new service component for the application or a departure from the description in VAST, describe those changes. If an external factor triggered this evaluation, please proivde those details as well."
+    },
+    "Data Regulation Check": {
+        "Yes": {
+            "next": "All Restricted"
+        },
+        "No": {
+            "next": "Same Provider"
+        },
+        "answer_array": [
+            "Yes",
+            "No"
+        ],
+        "text_option": false,
+        "multi-select": false,
+        "question": "Does the data associated with this workflow require special handling/restrictions for regulation (FISMA/PCI/...)?"
+    },
+    "All Restricted": {
+        "Yes": {
+            "next": "Same Provider"
+        },
+        "No": {
+            "next": "Purchase or Not"
+        },
+        "answer_array": [
+            "Yes",
+            "No"
+        ],
+        "text_option": false,
+        "multi-select": false,
+        "question": "Is all of the data associated with this workflow restricted?"
+    },
+    "Same Provider": {
+        "All options": {
+            "next": "Receive Data"
+        },
+        "answer_array": [
+            "Yes",
+            "No"
+        ],
+        "text_option": false,
+        "multi-select": false,
+        "question": "Will same components for all environments (NP/PLE/Prod) be in the same provider? (hint: NP in cloud, prod on-premise)"
+    },
+    "Receive Data": {
+        "Yes": {
+            "next": "Receive Data Long Answer"
+        },
+        "No": {
+            "next": "Send Data"
+        },
+        "answer_array": [
+            "Yes",
+            "No"
+        ],
+        "text_option": false,
+        "multi-select": false,
+        "question": "Will this application receive data from other applications?"
+    },
+    "Receive Data Long Answer": {
+        "All options": {
+            "next": "Send Data"
+        },
+        "answer_array": [],
+        "text_option": true,
+        "multi-select": false,
+        "question": "If so, what are those applications, where are they located at and how much data will be transferred on any given work day?"
+    },
+    "Send Data": {
+        "Yes": {
+            "next": "Send Data Long Answer"
+        },
+        "No": {
+            "next": "OS Support"
+        },
+        "answer_array": [
+            "Yes",
+            "No"
+        ],
+        "text_option": false,
+        "multi-select": false,
+        "question": "Will this application send data to other applications?"
+    },
+    "Send Data Long Answer": {
+        "All options": {
+            "next": "OS Support"
+        },
+        "answer_array": [],
+        "text_option": true,
+        "multi-select": false,
+        "question": "If so, what are those applications, where are they located at and how much data will be transferred on any given work day?"
+    },
+    "OS Support": {
+        "All options": {
+            "next": "Workload Characteristics"
+        },
+        "answer_array": [
+            "SysAdmin help required",
+            "Application team can support the Full Stack",
+            "Application team with Business Unit TechOps/SRE team that can support the Full Stack"
+        ],
+        "text_option": false,
+        "multi-select": false,
+        "question": "Will the application team reqiuire OS (sysadmin) support or will the application team members be able to fulfill this role?"
+    },
+    "Workload Characteristics": {
+        "All options": {
+            "next": "CI/CD"
+        },
+        "answer_array": [],
+        "text_option": true,
+        "multi-select": false,
+        "question": "What are the workload characteristics of this application? \n Is the workload static, batch processing, bursty in nature or are there special events that will require scale up for short periods of time?"
+    },
+    "CI/CD": {
+        "All options": {
+            "next": "Tiers"
+        },
+        "answer_array": [
+            "Yes, CI/CD based",
+            "No, manual installation or configuration steps are needed in portions of my application"
+        ],
+        "text_option": false,
+        "multi-select": false,
+        "question": "Is your application installation and configuration CI/CD based?"
+    },
+    "Tiers": {
+        "All options": {
+            "next": "Public Facing"
+        },
+        "answer_array": [
+            "Yes",
+            "No"
+        ],
+        "text_option": false,
+        "multi-select": false,
+        "question": "Are the tiers of this application on distinct instances?"
+    },
+    "Public Facing": {
+        "All options": {
+            "next": "Services Required"
+        },
+        "answer_array": [
+            "Yes",
+            "No"
+        ],
+        "text_option": false,
+        "multi-select": false,
+        "question": "Is the application public facing? (Red/Yellow Zone network required)"
+    },
+    "Services Required": {
+        "_comment": "Needs revision for functionality",
+        "Database": {
+            "next": "Database"
+        },
+        "Standard computing": {
+            "next": "Compute Instances"
+        },
+        "GenAI/LLM": {
+            "next": "VEGAS Q"
+        },
+        "Other options": {
+            "next": "Specialized Hardware/Services"
+        },
+        
+        "answer_array": [
+            "Database",
+            "Containerized application workload",
+            "GenAI/LLM",
+            "Serverless computing",
+            "Standard computing",
+            "Specialized CSP services (describe in the textbox)",
+            "Specialized hardware (describe in the textbox)"
+        ],
+        "text_option": true,
+        "multi-select": true,
+        "question": "What \"services\" do you require?"
+    },
+    "Database": {
+        "_comment": "Needs revision for functionality",
+        "MS-SQL Server": {
+            "next": "MS SQL DB"
+        },
+        "Other options": {
+            "next": "DB Size/Usage"
+        },
+        "answer_array": [
+            "Oracle",
+            "MS-SQL Server",
+            "MySQL",
+            "Postgres",
+            "Cassandra"
+        ],
+        "text_option": true,
+        "multi-select": true,
+        "question": "If this application requires a database, what type of DB is it?"
+    },
+    "MS SQL DB": {
+        "All options": {
+            "next": "DB Size/Usage"
+        },
+        "answer_array": [
+            "Yes",
+            "No"
+        ],
+        "text_option": false,
+        "multi-select": false,
+        "question": "Is the MS SQL DB space under 16 TB per instance?"
+    },
+    "DB Size/Usage": {
+        "All options": {
+            "next": "DBA"
+        },
+        "answer_array": [
+            "Incidental/Small",
+            "Medium 1-5 TB",
+            "Large 5-16 TB",
+            "Extra Large 16+ TB"
+        ],
+        "text_option": false,
+        "multi-select": false,
+        "question": "Database Size/Usage?"
+    },
+    "DBA": {
+        "_comment": "Needs revision for functionality",
+        "Standard computing": {
+            "next": "Compute Instances"
+        },
+        "GenAI/LLM": {
+            "next": "VEGAS Q"
+        },
+        "Other options": {
+            "next": "Specialized Hardware/Services"
+        },
+        "answer_array": [
+            "We have DBA team members",
+            "We do not have DBA team members and require a managed service"
+        ],
+        "text_option": false,
+        "multi-select": false,
+        "question": "If this application requires a database does the application have a DBA to manage the engine (installation/patching/tuning)?"
+    },
+    "Compute Instances": {
+        "All options": {
+            "next": "OS Required"
+        },
+        "answer_array": [
+            "1 to 32 vCPUs with 1 to 128 GB RAM",
+            "Larger than 32 vCPUs or larger than 128 GB RAM"
+        ],
+        "text_option": false,
+        "multi-select": false,
+        "question": "If this application requires standard compute instances, how big is the largest compute instance?"
+    },
+    "OS Required": {
+        "_comment": "Needs revision for functionality",
+        "GenAI/LLM": {
+            "next": "VEGAS Q"
+        },
+        "Other options": {
+            "next": "Specialized Hardware/Services"
+        },
+        "answer_array": [
+            "Linux",
+            "Windows"
+        ],
+        "text_option": false,
+        "multi-select": false,
+        "question": "If this application requires standard compute instances, what OS is required?"
+    },
+    "VEGAS Q": {
+        "All options": {
+            "next": "Specialized Hardware/Services"
+        },
+        "answer_array": [
+            "Yes",
+            "No"
+        ],
+        "text_option": false,
+        "multi-select": false,
+        "question": "If GenAI/LLM services are required can the application needs be met with the Verizon Enterprise Generative AI Service (VEGAS) Platform? (https://sites.google.com/verizon.com/genaiverizon/home)"
+    },
+    "Specialized Hardware/Services": {
+        "All options": {
+            "next": "Other Cloud Components"
+        },
+        "answer_array": [
+            "BigQuery",
+            "GPU",
+            "GSuite/Maps integration"
+        ],
+        "text_option": false,
+        "multi-select": true,
+        "question": "Will the following specialized cloud services or hardware be needed?"
+    },
+    "Other Cloud Components": {
+        "All options": {
+            "next": "Review Responses"
+        },
+        "answer_array": [],
+        "text_option": true,
+        "multi-select": false,
+        "question": "Are other cloud components needed for this solution? (e.g. Glue, Looker, App Config, etc)"
+    },
+    "Purchase or Not": {
+        "All options": {
+            "next": "CPU Question"
+        },
+        "answer_array": [
+            "Purchase needed",
+            "Purchase not needed"
+        ],
+        "text_option": false,
+        "multi-select": false,
+        "question": "Will the workload fit on  an on-premise virtualized environment or will a purchase be needed?"
+    },
+    "CPU Question": {
+        "All options": {
+            "next": "Review Responses"
+        },
+        "answer_array": [
+            "Yes",
+            "No"
+        ],
+        "text_option": false,
+        "multi-select": false,
+        "question": "<= 32 CPUs and <= 128g memory per instance needed?"
+    },
+    "Review Responses": {
+        "Get Recommendation": {
+            "next": "Recommendation"
+        }
+    },
+    "Recommendation": {
+        "Restart Process": {
+            "next": "VSAD Select"
+        }
+    }
+}
