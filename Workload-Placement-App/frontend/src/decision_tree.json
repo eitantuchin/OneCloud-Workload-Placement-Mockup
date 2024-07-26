@@ -87,7 +87,7 @@
             "Platform Change (Solaris <-> Linux, instance to containers, convert to serverless)",
             "Cost evaluation, including CapEX <-> OpEx changes",
             "Staffing changes/reorganization",
-            "External factors (anti-pattern for existing provieer, data center limits, non-directional data center"
+            "External factors (anti-pattern for existing provieer, data center limits, non-directional data center)"
         ],
         "text_option": false,
         "multi-select": true,
@@ -119,10 +119,10 @@
     },
     "All Restricted": {
         "Yes": {
-            "next": "Same Provider"
+            "next": "Purchase or Not"
         },
         "No": {
-            "next": "Purchase or Not"
+            "next": "Same Provider"
         },
         "answer_array": [
             "Yes",
