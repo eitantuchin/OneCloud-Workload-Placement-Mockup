@@ -1,33 +1,111 @@
-// when the "Get Recommendation" button is clicked the responseMap should be fed to the AI as part of the system message
-import React from "react";
-import { responseMap } from "./question_page";
+import React, { useState } from "react";
+import { responseMapWrapper } from "./question_page";
+import RecommendationView from "./recommendation";
+import { responseDatabase } from "./index";
+import { inputValueExp } from "./start_page";
 
-function ResponsesView({ goBack, canGetRecommendation }) {  // Receive goBack and canGetRecommendation as props
+var recommendation;
+
+// Function to generate a random 20-character string
+const generateRandomId = () => {
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let result = '';
+    for (let i = 0; i < 20; i++) {
+        result += characters.charAt(Math.floor(Math.random() * characters.length));
+    }
+    return result;
+};
+
+// Function to ensure the ID is unique
+const getUniqueId = async () => {
+    let id;
+    let unique = false;
+    while (!unique) {
+        id = generateRandomId();
+        const existing = await responseDatabase.responses.findOne({ selector: { id } }).exec();
+        if (!existing) {
+            unique = true;
+        }
+    }
+    return id;
+};
+
+function ResponsesView({ goBack, canGetRecommendation }) {
+    const [showRecommendation, setShowRecommendation] = useState(false);
+    const [loading, setLoading] = useState(false); // State to manage loading
+
+    const handleRecommendationClick = async () => {
+        setLoading(true); // Set loading to true when the function starts
+        try {
+            const uniqueId = await getUniqueId(); // Get a unique ID
+            const responseMap = responseMapWrapper.map;
+
+            const response = await fetch('http://127.0.0.1:5000/submit-responses', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(responseMap),
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            
+            const result = await response.json();
+            recommendation = result['AI Recommendation'];
+            console.log('Unique id: ' + uniqueId)
+            await responseDatabase.responses.insert({
+                id: uniqueId,
+                VZID: "tuchiei",
+                VSAD: inputValueExp,
+                RESPONSES: JSON.stringify(responseMap),
+                REC: recommendation
+            });
+
+            setShowRecommendation(true);
+        } catch (error) {
+            console.error('Error sending data:', error);
+        } finally {
+            setLoading(false); // Set loading to false when the function ends
+        }
+    };
+
+    if (showRecommendation) {
+        return <RecommendationView />;
+    }
+
     return (
         <div style={{ padding: "20px", fontFamily: "Arial, sans-serif" }}>
             <h2>Workload Placement</h2>
             <hr />
-            <div style={{ display: "flex", alignItems: "center", marginBottom: "20px" }}>
-                <h3 style={{ marginRight: "20px" }}>Review Your Responses</h3>
+            <div style={{ display: "flex", alignItems: "center", marginBottom: "30px" }}>
+                <h3 style={{ marginRight: "30px" }}>Review Your Responses</h3>
                 {canGetRecommendation ? (
-                    <button
-                        style={{
-                            backgroundColor: "#1e90ff",
-                            color: "white",
-                            border: "none",
-                            padding: "10px",
-                            marginLeft: "10px",
-                            cursor: "pointer",
-                            borderRadius: "4px",
-                            fontFamily: "Arial, sans-serif"
-                        }}
-                        onClick={() => console.log(responseMap)}  // Placeholder for recommendation logic
-                    >
-                        <b>GET RECOMMENDATION</b>
-                    </button>
+                    <div style={{ display: "flex", alignItems: "center" }}>
+                        <button
+                            style={{
+                                backgroundColor: loading ? "gray" : "#d52b1e", // Change color when loading
+                                color: "white",
+                                border: "none",
+                                padding: "10px",
+                                marginLeft: "10px",
+                                cursor: loading ? "not-allowed" : "pointer", // Change cursor when loading
+                                borderRadius: "4px",
+                                fontFamily: "Arial, sans-serif"
+                            }}
+                            onClick={handleRecommendationClick}
+                            disabled={loading} // Disable button when loading
+                        >
+                            GET RECOMMENDATION
+                        </button>
+                        {loading ? (<p style={{ marginLeft: "10px" }}>Loading...</p>) : 
+                            (<p style={{ marginLeft: "10px", color: "red" }}>Warning: Once you click this button you will have to restart again!</p>
+                        )}
+                    </div>
                 ) : (
                     <p style={{ color: "red", marginLeft: "10px" }}>
-                        Please finish answering all necessary questions to get your recommendation.
+                        Please finish answering all necessary questions to get recommendation.
                     </p>
                 )}
                 <button
@@ -36,19 +114,18 @@ function ResponsesView({ goBack, canGetRecommendation }) {  // Receive goBack an
                         color: "white",
                         border: "none",
                         padding: "10px",
-                        marginLeft: "auto", // Aligns the button to the right
+                        marginLeft: "auto",
                         cursor: "pointer",
                         borderRadius: "4px",
                         fontFamily: "Arial, sans-serif"
                     }}
-                    onClick={goBack}  // Use goBack function to go back to the previous page
+                    onClick={goBack}
                 >
                     <b>Back</b>
                 </button>
-               
             </div>
             <div style={{ marginTop: "20px" }}>
-                {Object.entries(responseMap).map(([question, answer]) => (
+                {Object.entries(responseMapWrapper.map).map(([question, answer]) => (
                     <div key={question} style={{ marginBottom: "20px" }}>
                         <h4 style={{ marginRight: "20px" }}>{question}</h4>
                         {Array.isArray(answer) ? (
@@ -69,4 +146,5 @@ function ResponsesView({ goBack, canGetRecommendation }) {  // Receive goBack an
     );
 }
 
+export { recommendation };
 export default ResponsesView;

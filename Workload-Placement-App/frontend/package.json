@@ -2,6 +2,7 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:5000",
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
@@ -10,12 +11,18 @@
     "bootstrap": "^5.3.3",
     "cors": "^2.8.5",
     "express": "^4.19.2",
+    "html2canvas": "^1.4.1",
+    "http-proxy-middleware": "^3.0.0",
+    "jspdf": "^2.5.1",
     "mongodb": "^6.8.0",
     "nodemon": "^3.1.4",
     "react": "^18.3.1",
     "react-bootstrap": "^2.10.4",
     "react-dom": "^18.3.1",
+    "react-router-dom": "^6.26.0",
     "react-scripts": "5.0.1",
+    "rxdb": "^15.29.0",
+    "rxjs": "^7.8.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

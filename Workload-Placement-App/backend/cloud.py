@@ -1,38 +1,49 @@
-import os
-from dotenv import load_dotenv
+"""
+Install the Google AI Python SDK
+
+$ pip3 install google-generativeai
+
+See the getting started guide for more information:
+https://ai.google.dev/gemini-api/docs/get-started/python
+"""
+# import os
+import json
 import google.generativeai as genai
 
-# Load environment variables from a .env file
-load_dotenv()
+# cloud.py
+from flask import Flask, request, jsonify
+from flask_cors import CORS
 
-# Configure API key
-genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
+app = Flask(__name__)
+CORS(app)  # This will enable CORS for all routes
 
-# Set generation configuration
-generation_config = {
-  "temperature": 0,
-  "top_p": 0.95,
-  "top_k": 64,
-  "max_output_tokens": 8192,
-  "response_mime_type": "text/plain",
-}
 
-# Create the model
-model = genai.GenerativeModel(
-  model_name="gemini-1.5-flash",
-  generation_config=generation_config,
-  system_instruction="You are an expert solutions architect for Verizon. You help tell users where to put their workload, whether it be on-premises in a data center or in a cloud service provider such as AWS, Azure, Google Cloud, or Oracle, based off the following decision tree created by Verizon's team. You will be passed information from the frontend regarding the user's workload and the recommendation that was made regarding the workload. Based off of that, I want you to justify and explain the recommendation that was made.\n\n",
-)
+@app.route('/submit-responses', methods=['POST', 'GET'])
+def submit_responses():
+    # Access your API key as an environment variable.
+    API_KEY = "AIzaSyBnNa--Wp5B_8olfHXj7YW1MnofNUiSchA"
+    genai.configure(api_key=API_KEY)
+    # Choose a model that's appropriate for your use case.
+    model = genai.GenerativeModel('gemini-1.5-flash')
 
-# Start a chat session
-chat_session = model.start_chat(
-  history=[
-    # Initial instructions or messages can go here
-  ]
-)
+    data = request.json  
 
-# Send a message to the model (replace "INSERT_INPUT_HERE" with actual input)
-response = chat_session.send_message("INSERT_INPUT_HERE")
+    #data = data["RESPONSES"]
 
-# Print the response
-print(response.text)
+    data_string = json.dumps(data)
+
+    print(data)
+    print(data_string)
+
+    prompt = "Introduction: You are a polite and user friendly expert solutions architect for Verizon. You help tell users where to put their workload, whether it be on-premises in a data center or in a cloud service provider such as AWS, Azure, Google Cloud, or Oracle, or whether it should function in a hybrid environment (a mix between on-prem and cloud). A special case is if the user says YES to the App Retirement question then you should recommend them to keep their workload where it's currently at regardless of other factors. Below I will give you context to Verizon's specific process of determining workload placement and I will also provide a dictionary of responses given by the user which will help determine your recommendation. When you give the recommendation, explain the decision based on their responses. Here are the responses: " + data_string + "Now that you have everything please give a response to the user as if you are giving them a recommendation verbally. Assume they have some technical knowledge so don't be afraid to use more technical terms in your explanation."
+
+    response = model.generate_content(prompt)
+
+    print(response.text)
+   
+    # Handle the responseMap data here
+    # print("Received data:", data)
+    return jsonify({"AI Recommendation": response.text})
+
+if __name__ == '__main__':
+    app.run(debug=True)

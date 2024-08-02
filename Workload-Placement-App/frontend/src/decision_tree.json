@@ -61,9 +61,6 @@
         "question": "If existing, where is the current hardware/processing located?"
     },
     "App Retirement": {
-        "Yes": {
-            "next": "Review Responses"
-        },
         "No": {
             "next": "Circumstances"
         },
@@ -203,7 +200,7 @@
         ],
         "text_option": false,
         "multi-select": false,
-        "question": "Will the application team reqiuire OS (sysadmin) support or will the application team members be able to fulfill this role?"
+        "question": "Will the application team require OS (sysadmin) support or will the application team members be able to fulfill this role?"
     },
     "Workload Characteristics": {
         "All options": {
@@ -262,7 +259,7 @@
             "next": "VEGAS Q"
         },
         "Other options": {
-            "next": "Specialized Hardware/Services"
+            "next": "Other Cloud Components"
         },
         
         "answer_array": [
@@ -332,7 +329,7 @@
             "next": "VEGAS Q"
         },
         "Other options": {
-            "next": "Specialized Hardware/Services"
+            "next": "Other Cloud Components"
         },
         "answer_array": [
             "We have DBA team members",
@@ -360,7 +357,7 @@
             "next": "VEGAS Q"
         },
         "Other options": {
-            "next": "Specialized Hardware/Services"
+            "next": "Other Cloud Components"
         },
         "answer_array": [
             "Linux",
